@@ -1,0 +1,15 @@
+.form-signin-heading {
+  margin-bottom: 1em;
+}
+
+.form-signin{
+    padding: 1em;
+    border-radius: 10px;
+    background-color: #4c3434e0;
+    color: rgba(255,255,255,.8);
+    position: relative;
+    box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+    box-sizing: border-box;
+    backdrop-filter: blur(33px);
+    background-blend-mode: overlay;
+}

@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import 'ngx-toastr/toastr';
+
+body{
+    background-color: #e1a9a982;
+}
+.menu-icon{
+    width: 2.5em;
+    height: 2.5em;
+    cursor: pointer;
+    color: rgba(255,255,255,.8);
+}
+.header-title{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.header-bar{
+    background-color: #4c3434e0;
+    color: rgba(255,255,255,.8);
+    box-shadow: 0px 20px 15px rgb(0 0 0 / 20%);
+    box-sizing: border-box;
+    backdrop-filter: blur(33px);
+    background-blend-mode: overlay;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    height: 3.5em;
+}
+.user-name{
+    font-size: 1.2em;
+    color: rgba(255,255,255,.8);
+}
+.logout-icon{
+    width: 2.5em;
+    height: 2.5em;
+    cursor: pointer;
+    color: rgba(255,255,255,.8);
+    margin-left: 1.5em;
+}

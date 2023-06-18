@@ -1,0 +1,17 @@
+<div class="home-page">
+    <div class="dashboard-title">
+        Welcome to Vehicle Management System, {{user?.name}}
+    </div>
+    <div class="owner-dashboard" *ngIf="role == 'owner'">
+        With this application you can manage your vehicles and appointments. To get started:
+        <ul>
+            <li>You can click on the hamburger icon <span><img class="menu-black-icon" src="assets/icons/menu-black.svg"></span> on the top left to open the navigational menu.</li>
+            <li>Here you will find different pages you can proceed with</li>
+            <li>If you click on <b>My Appointments</b>, you can see a list of consolidated appointments you made for your vehicles.</li>
+            <li>You can also create/cancel an appointment from here.</li>
+            <li>Click on <b>My Vehicles</b> to manage your vehicles</li>
+            <li>Here you can add a new Vehicle and edit/delete a vehicle if you want to.</li>
+            <li>In case you want to come back to this page again, clicking on the <b>Home</b> button will do.</li>
+        </ul>
+    </div>
+</div>

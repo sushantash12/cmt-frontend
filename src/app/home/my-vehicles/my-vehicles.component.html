@@ -1,0 +1,44 @@
+<div class="my-vehicles-title">Manage your Vehicles</div>
+<div class="add-vehicle-button">
+    <button class="btn btn-primary" (click)="addVehicle()">Add Vehicle</button>
+</div>
+
+<div class="my-vehicles">
+    <div class="no-vehicles" *ngIf="vehicles.length == 0">
+        You have no vehicles added. Click on Add Vehicle to add a new vehicle.
+    </div>
+
+    <div class="my-vehicles-title" *ngIf="vehicles.length > 0">
+        My Vehicles
+    </div>
+
+    <table *ngIf="vehicles.length > 0" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Make</th>
+                <th scope="col">Model</th>
+                <th scope="col">Year</th>
+                <th scope="col">VIN</th>
+                <th scope="col">License Plate</th>
+                <th scope="col">Mileage</th>
+                <th scope="col">Last Mileage Recorded</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let vehicle of vehicles">
+                <td>{{vehicle?.make}}</td>
+                <td>{{vehicle?.model}}</td>
+                <td>{{vehicle?.year}}</td>
+                <td>{{vehicle?.VIN}}</td>
+                <td>{{vehicle?.licensePlate}}</td>
+                <td>{{vehicle?.mileage}}</td>
+                <td>{{vehicle?.mileageDate | date}}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="editVehicle(vehicle)">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteVehicle(vehicle)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

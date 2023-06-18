@@ -1,0 +1,31 @@
+<div class="header-bar">
+    <div class="container-fluid row">
+        <div class="col-md-12 d-flex">
+            <div class="col-md-3">
+                <img src="assets/icons/menu.svg" alt="menu" class="menu-icon" (click)="toggleMenu()">
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="header-title">Vehicle Management System</div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center justify-content-end">
+                <div class="user-name">{{user?.name}}</div>
+                <img src="assets/icons/logout.svg" alt="logout" class="logout-icon" title="Logout">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row h-100 w-100">
+    <div class="col-md-12 d-flex">
+        <div class="col-md-2 sidebar" *ngIf="showMenu">
+            <div class="sidebar-items" *ngFor="let item of menuItems" (click)="navigate(item)">
+                <div class="d-flex sidebar-item" [ngClass]="item.selected ? 'selected':''" *ngIf="isOwner && item.owner">
+                    <img src="{{item.icon}}" alt="{{item.name}}" class="sidebar-icon">
+                    <div class="sidebar-item-name">{{item.name}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
