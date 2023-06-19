@@ -11,7 +11,22 @@
             <li>You can also create/cancel an appointment from here.</li>
             <li>Click on <b>My Vehicles</b> to manage your vehicles</li>
             <li>Here you can add a new Vehicle and edit/delete a vehicle if you want to.</li>
+            <li>You can also see your Vehicle Maintenance Records from here</li>
             <li>In case you want to come back to this page again, clicking on the <b>Home</b> button will do.</li>
         </ul>
+    </div>
+
+    <div class="owner-dashboard mt-5" *ngIf="notifications.length>0">
+        <div class="d-flex notifications">
+            <img src="assets/icons/notification.svg" class="notification-icon">
+            <div class="notifications-title">Notifications</div>
+        </div>
+        <div class="notifications-list mt-2">
+            <div class="notification">
+                <ul>
+                    <li *ngFor="let notification of notifications">{{notification}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

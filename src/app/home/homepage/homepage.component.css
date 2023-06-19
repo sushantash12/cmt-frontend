@@ -9,3 +9,14 @@
     width: 1em;
     height: 1em;
 }
+
+.notification-icon{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.notifications-title{
+    margin-left: 0.5em;
+    font-size: 1.3em;
+    font-weight: bold;
+}

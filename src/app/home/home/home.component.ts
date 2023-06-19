@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-home',
@@ -85,4 +86,9 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['home'+item.link]);
     }
   }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['']);
+  }  
 }
