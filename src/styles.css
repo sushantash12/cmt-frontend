@@ -37,3 +37,6 @@ body{
     color: rgba(255,255,255,.8);
     margin-left: 1.5em;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
