@@ -26,6 +26,14 @@ export class ApiService {
     return this.http.get(this.baseUrl + '/vehicles/' + ownerId, {headers});
   }
 
+  getVehiclesOfOwnerWithMR(ownerId: string){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.get(this.baseUrl + '/vehicles/withMr/' + ownerId, {headers});
+  }
+
   addVehicleForOwner(vehicle: any){
     // add authorization header with jwt token
     let headers = {
@@ -73,4 +81,13 @@ export class ApiService {
     }
     return this.http.post(this.baseUrl + '/appointments', appointment, {headers});
   }
+
+  updateAppointmentForOwner(appointment: any, appointmentID: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.put(this.baseUrl + '/appointments/'+ appointmentID, appointment, {headers});
+  }
+
 }

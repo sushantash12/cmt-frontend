@@ -16,6 +16,7 @@ export class MyVehiclesComponent implements OnInit {
   editButtonClicked: boolean = false;
   today: Date = new Date();
   deletedVehicle: any;
+  maintenanceButtonClicked: boolean = false;
 
   addVehicleForm = new FormGroup({
     make: new FormControl('', [Validators.required]),
@@ -35,6 +36,7 @@ export class MyVehiclesComponent implements OnInit {
     licensePlate: new FormControl('', [Validators.required]),
     mileage: new FormControl('', [Validators.required]),
   });
+  selectedVehicle: any;
 
   constructor(private apiService: ApiService, private toastr: ToastrService, private modalService: NgbModal) { }
 
@@ -43,7 +45,7 @@ export class MyVehiclesComponent implements OnInit {
   }
 
   getVehiclesOfOwner(){
-    this.apiService.getVehiclesOfOwner(this.owner.ownerID).subscribe((response: any) => {
+    this.apiService.getVehiclesOfOwnerWithMR(this.owner.ownerID).subscribe((response: any) => {
       this.vehicles = response;
       console.log(this.vehicles);
     }, (error: any) => {
@@ -132,5 +134,10 @@ export class MyVehiclesComponent implements OnInit {
       console.log(result);
     }, (reason) => {
     });
+  }
+
+  seeMaintenance(vehicle: any){
+    this.maintenanceButtonClicked = true;
+    this.selectedVehicle = vehicle;
   }
 }

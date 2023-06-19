@@ -37,6 +37,7 @@
                 <td>
                     <button class="btn btn-primary" (click)="editVehicle(vehicle)">Edit</button>
                     <button class="btn btn-danger" (click)="open(mymodal, vehicle)">Delete</button>
+                    <button class="btn btn-primary" (click)="seeMaintenance(vehicle)" *ngIf="vehicle?.maintenanceRecords?.length>0">See Maintenance Records</button>
                 </td>
             </tr>
         </tbody>
@@ -110,8 +111,35 @@
         </div>
         <button class="btn btn-primary mt-3" type="submit" [disabled]="!editVehicleForm.valid">Update Vehicle</button>
     </form>
-    <button class="btn btn-danger mt-3" (click)="editButtonCancel()">Cancel</button>
-    
+    <button class="btn btn-danger mt-3" (click)="editButtonCancel()">Cancel</button>    
+</div>
+
+<div class="maintenance-records mt-5" *ngIf="maintenanceButtonClicked && !addButtonClicked && !editButtonClicked">
+    <div class="my-vehicles-title">
+        Maintenance Records for {{selectedVehicle?.make}} {{selectedVehicle?.model}} {{selectedVehicle?.year}}
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Service Type</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Next Maintenance Date</th>
+                <th scope="col">Was Appointment Scheduled?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of selectedVehicle.maintenanceRecords">
+                <td>{{record?.date | date}}</td>
+                <td>{{record?.type}}</td>
+                <td>{{record?.cost}}</td>
+                <td>{{record?.notes}}</td>
+                <td>{{record?.nextMaintenanceDate | date}}</td>
+                <td>{{record.isAppointment ? 'Yes': 'No'}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <ng-template #mymodal let-modal>
@@ -128,4 +156,4 @@
       <button type="button" class="btn btn-danger" (click)="deleteVehicle()">Delete</button>
     <button type="button" class="btn btn-primary" (click)="modal.dismiss('cancel click')">Cancel</button>
     </div>
-  </ng-template>
+</ng-template>

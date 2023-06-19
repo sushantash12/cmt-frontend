@@ -30,7 +30,7 @@
             <tr *ngFor="let appointment of appointments">
                 <td>{{appointment?.appointmentDate | date:'medium'}}</td>
                 <td>{{appointment?.appointmentStatus}}</td>
-                <td>{{appointment?.lastUpdate}}</td>
+                <td>{{appointment?.lastUpdate | date:'medium'}}</td>
                 <td>{{appointment?.serviceType}}</td>
                 <td>{{appointment?.vehicleDetails[0]?.year + ' ' + appointment?.vehicleDetails[0]?.make + ' ' +
                     appointment?.vehicleDetails[0]?.model}}</td>
@@ -40,7 +40,7 @@
                 <td>
                     <button class="btn btn-primary" (click)="editAppointment(appointment)"
                         *ngIf="appointment.appointmentStatus == 'Open'">Edit</button>
-                    <button class="btn btn-danger" (click)="open('mymodal', appointment)"
+                    <button class="btn btn-danger" (click)="open(mymodal, appointment)"
                         *ngIf="appointment.appointmentStatus == 'Open'">Cancel</button>
                     <button class="btn btn-primary" (click)="seeDetails(appointment)">See Details</button>
                 </td>
@@ -56,7 +56,7 @@
         <button class="back-button btn btn-primary justify-content-end align-items-end" (click)="seeDetailsButtonClicked = false">Back</button>
     </div>
 
-    <div class="appointment-details">
+    <div class="appointment-details mt-5">
         <div class="appointment-details-title">Appointment Date
             <div class="appointment-details-value">{{detailObject?.appointmentDate | date:'medium'}}</div>
         </div>
@@ -89,16 +89,16 @@
             <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.mileage}}</div>
         </div>
         <div class="appointment-details-title">Provider Selected
-            <div class="appointment-details-value">{{detailObject?.provider?.name}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.name}}</div>
         </div>
         <div class="appointment-details-title">Provider Address
-            <div class="appointment-details-value">{{detailObject?.provider?.address}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.address}}</div>
         </div>
         <div class="appointment-details-title">Provider Phone Number
-            <div class="appointment-details-value">{{detailObject?.provider?.phone}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.phone}}</div>
         </div>
         <div class="appointment-details-title">Provider Email
-            <div class="appointment-details-value">{{detailObject?.provider?.email}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.email}}</div>
         </div>
         <div class="appointment-details-title">Additional Notes
             <div class="appointment-details-value">{{detailObject?.notes}}</div>
@@ -155,3 +155,69 @@
     </form>
 
 </div>
+
+<!-- Edit Appointment -->
+<div class="edit-appointment" *ngIf="editButtonClicked">
+    <div class="my-vehicles-title">
+        Update an Appointment
+    </div>
+
+    <form [formGroup]="editAppointmentForm" class="appointment" (ngSubmit)="updateAppointment()">
+        <div class="form-group">
+            <mat-form-field>
+                <label for="appointmentDate">Appointment Date</label>
+                <input matInput type="datetime-local" id="appointmentDate" class="form-control datepick" formControlName="appointmentDate">            
+            </mat-form-field>
+        </div>
+        
+        <div class="form-group">
+            <label for="serviceType">Service Type</label>
+            <select class="form-control" id="serviceType" formControlName="serviceType">
+                <option value="Oil Change">Oil Change</option>
+                <option value="Tire Rotation">Tire Rotation</option>
+                <option value="Brake Replacement">Brake Replacement</option>
+                <option value="Battery Replacement">Battery Replacement</option>
+                <option value="Engine Repair">Engine Repair</option>
+                <option value="Transmission Repair">Transmission Repair</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="vehicle">Vehicle</label>
+            <select class="form-control" id="vehicle" formControlName="vehicleID">
+                <option *ngFor="let vehicle of vehicles" [ngValue]="vehicle.vehicleID">{{vehicle?.year + ' ' + vehicle?.make + ' ' + vehicle?.model}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="provider">Provider</label>
+            <select class="form-control" id="provider" formControlName="providerID">
+                <option *ngFor="let provider of providers" [ngValue]="provider.providerID">{{provider?.name}} - {{provider?.address}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea class="form-control" id="notes" rows="3" formControlName="notes"></textarea>
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="!editAppointmentForm.valid">Update Appointment</button>
+    </form>
+
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Cancel Appointment?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Are you sure you want to cancel this appointment?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="cancelAppointment()">Cancel Appointment</button>
+    <button type="button" class="btn btn-primary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    </div>
+</ng-template>

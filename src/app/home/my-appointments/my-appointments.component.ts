@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-my-appointments',
@@ -18,6 +19,7 @@ export class MyAppointmentsComponent implements OnInit {
   detailObject: any;
   today: Date = new Date();
   vehicles: any[] = [];
+  deletedAppointment: any;
   
 
   addAppointmentForm = new FormGroup({
@@ -28,17 +30,26 @@ export class MyAppointmentsComponent implements OnInit {
     notes: new FormControl(''),
   });
 
-  constructor(private apiService: ApiService, private toastr: ToastrService) { }
+  editAppointmentForm = new FormGroup({
+    appointmentID: new FormControl(''),
+    appointmentDate: new FormControl('', [Validators.required]),
+    vehicleID: new FormControl('', [Validators.required]),
+    serviceType: new FormControl('', [Validators.required]),
+    providerID: new FormControl('', [Validators.required]),
+    notes: new FormControl(''),
+  });
+
+  constructor(private apiService: ApiService, private toastr: ToastrService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getAppointmentsOfOwner();
     this.getOwnerVehicles();
   }
 
-  async getAppointmentsOfOwner(){
-    this.apiService.getAppointmentsOfOwner(this.owner.ownerID).subscribe(async (response: any) => {
+  getAppointmentsOfOwner(){
+    this.apiService.getAppointmentsOfOwner(this.owner.ownerID).subscribe((response: any) => {
       this.appointments = response;
-      await this.setProviderNames();
+      this.setProviderNames();
       console.log(this.appointments);
     },
     (error: any) => {
@@ -47,27 +58,56 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
   editAppointment(appointment: any){
-
+    this.editButtonClicked = true;
+    this.editAppointmentForm.setValue({
+      appointmentID: appointment.appointmentID,
+      appointmentDate: appointment.appointmentDate,
+      vehicleID: appointment.vehicleID,
+      serviceType: appointment.serviceType,
+      providerID: appointment.providerID,
+      notes: appointment.notes
+    })
   }
 
   open(mymodal:any, appointment:any){
+    this.deletedAppointment = appointment;
+    this.modalService.open(mymodal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result: any) => {
+      console.log(result);
+    }, (reason: any) => {
+    });
+  }
 
+  cancelAppointment(){
+    let today = new Date();
+    let todayString = today.toISOString();
+    let obj = {
+      appointmentStatus: 'Cancelled',
+      lastUpdate: todayString,
+      appointmentDate: this.deletedAppointment.appointmentDate,
+      vehicleID: this.deletedAppointment.vehicleID,
+      serviceType: this.deletedAppointment.serviceType,
+      providerID: this.deletedAppointment.providerID,
+      notes: this.deletedAppointment.notes
+    }
+    this.apiService.updateAppointmentForOwner(obj, this.deletedAppointment.appointmentID).subscribe((response: any) => {
+      this.toastr.success(response.message);
+      this.getAppointmentsOfOwner();
+      this.modalService.dismissAll();
+    },
+    (error: any) => {
+      this.toastr.error(error.error.message);
+    }
+
+    )
   }
 
   addAppointment(){
     this.addButtonClicked = true;
   }
 
-  async setProviderNames(){
+  setProviderNames(){
     this.apiService.getAllProviders().then((response: any) => {
       this.providers = response;
-      for(let i = 0; i < this.appointments.length; i++){
-        for(let j = 0; j < response.length; j++){
-          if(this.appointments[i].providerID == response[j].providerID){
-            this.appointments[i].provider = response[j];
-          }
-        }
-      }
     })
   }
 
@@ -105,4 +145,31 @@ export class MyAppointmentsComponent implements OnInit {
     })
   }
 
+  updateAppointment(){
+    let today = new Date();
+    let todayString = today.toISOString();
+    let appointmentID = this.editAppointmentForm.value.appointmentID;
+
+    let obj={
+      appointmentDate: this.editAppointmentForm.value.appointmentDate,
+      vehicleID: this.editAppointmentForm.value.vehicleID,
+      serviceType: this.editAppointmentForm.value.serviceType,
+      providerID: this.editAppointmentForm.value.providerID,
+      notes: this.editAppointmentForm.value.notes,
+      appointmentStatus: 'Open',
+      lastUpdate: todayString
+    } 
+    
+    this.apiService.updateAppointmentForOwner(obj, appointmentID).subscribe((response: any) => {
+      this.toastr.success(response.message);
+      this.getAppointmentsOfOwner();
+      this.editButtonClicked = false;
+    },
+    (error: any) => {
+      this.toastr.error(error.error.message);
+    }
+    )
+  }
+
+  
 }

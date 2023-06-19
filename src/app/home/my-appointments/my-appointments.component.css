@@ -96,3 +96,8 @@ table tr:first-child th {
     height: 2em;
     background-color: #ffffff;
 }
+.close{
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+}
