@@ -53,7 +53,18 @@ export class HomeComponent implements OnInit {
   ];
   isOwner: boolean = false;
   isAdmin: boolean = false;
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+    // get url and set selected menu item
+    let url = this.router.url;
+    url = url.replace('/home', '');
+    this.menuItems.forEach((element) => {
+      element.selected = false;
+      if(element.link == url){
+        element.selected = true;
+      }
+    }
+    );
+  }
 
   ngOnInit(): void {
     this.user = localStorage.getItem('role') == 'owner' ? JSON.parse(localStorage.getItem('owner')!) : JSON.parse(localStorage.getItem('admin')!);

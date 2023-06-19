@@ -1,9 +1,9 @@
 <div class="my-vehicles-title">Manage your Vehicles</div>
-<div class="add-vehicle-button">
+<div class="add-vehicle-button" *ngIf="!addButtonClicked && !editButtonClicked">
     <button class="btn btn-primary" (click)="addVehicle()">Add Vehicle</button>
 </div>
 
-<div class="my-vehicles">
+<div class="my-vehicles" *ngIf="!addButtonClicked && !editButtonClicked">
     <div class="no-vehicles" *ngIf="vehicles.length == 0">
         You have no vehicles added. Click on Add Vehicle to add a new vehicle.
     </div>
@@ -36,9 +36,96 @@
                 <td>{{vehicle?.mileageDate | date}}</td>
                 <td>
                     <button class="btn btn-primary" (click)="editVehicle(vehicle)">Edit</button>
-                    <button class="btn btn-danger" (click)="deleteVehicle(vehicle)">Delete</button>
+                    <button class="btn btn-danger" (click)="open(mymodal, vehicle)">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<div class="add-vehicle" *ngIf="addButtonClicked">
+    <div class="my-vehicles-title">
+        Add Vehicle
+    </div>
+
+    <form [formGroup]="addVehicleForm" style="width: 100%;" (ngSubmit)="onAdd()">
+        <div class="form-group">
+            <label for="make">Make</label>
+            <input type="text" class="form-control" id="make" formControlName="make" placeholder="Enter Make">
+        </div>
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" class="form-control" id="model" formControlName="model" placeholder="Enter Model">
+        </div>
+        <div class="form-group">
+            <label for="year">Year</label>
+            <input type="text" class="form-control" id="year" formControlName="year" placeholder="Enter Year">
+        </div>
+        <div class="form-group">
+            <label for="VIN">VIN</label>
+            <input type="text" class="form-control" id="VIN" formControlName="VIN" placeholder="Enter VIN">
+        </div>
+        <div class="form-group">
+            <label for="licensePlate">License Plate</label>
+            <input type="text" class="form-control" id="licensePlate" formControlName="licensePlate" placeholder="Enter License Plate">
+        </div>
+        <div class="form-group">
+            <label for="mileage">Mileage</label>
+            <input type="number" class="form-control" id="mileage" formControlName="mileage" placeholder="Enter Mileage">
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="!addVehicleForm.valid">Add Vehicle</button>
+    </form>
+    <button class="btn btn-danger mt-3" (click)="addButtonClicked = false">Cancel</button>    
+</div>
+
+<div class="edit-vehicle" *ngIf="editButtonClicked">
+    <div class="my-vehicles-title">
+        Edit Vehicle
+    </div>
+
+    <form [formGroup]="editVehicleForm" style="width: 100%;" (ngSubmit)="onEdit()">
+        <div class="form-group">
+            <label for="make">Make</label>
+            <input type="text" class="form-control" id="make" formControlName="make" placeholder="Enter Make">
+        </div>
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" class="form-control" id="model" formControlName="model" placeholder="Enter Model">
+        </div>
+        <div class="form-group">
+            <label for="year">Year</label>
+            <input type="text" class="form-control" id="year" formControlName="year" placeholder="Enter Year">
+        </div>
+        <div class="form-group">
+            <label for="VIN">VIN</label>
+            <input type="text" class="form-control" id="VIN" formControlName="VIN" placeholder="Enter VIN" readonly [disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="licensePlate">License Plate</label>
+            <input type="text" class="form-control" id="licensePlate" formControlName="licensePlate" placeholder="Enter License Plate">
+        </div>
+        <div class="form-group">
+            <label for="mileage">Mileage</label>
+            <input type="number" class="form-control" id="mileage" formControlName="mileage" placeholder="Enter Mileage">
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="!editVehicleForm.valid">Update Vehicle</button>
+    </form>
+    <button class="btn btn-danger mt-3" (click)="editButtonCancel()">Cancel</button>
+    
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Vehicle?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Are you sure you want to delete this vehicle? - {{deletedVehicle?.make}} {{deletedVehicle?.model}} {{deletedVehicle?.year}}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="deleteVehicle()">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    </div>
+  </ng-template>

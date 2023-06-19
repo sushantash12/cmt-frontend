@@ -1,0 +1,106 @@
+<div class="my-appointments-title">Manage your Appointments</div>
+<div class="add-appointment-button" *ngIf="!addButtonClicked && !editButtonClicked && !seeDetailsButtonClicked">
+    <button class="btn btn-primary" (click)="addAppointment()">Schedule an Appointment</button>
+</div>
+
+<div class="my-appointments" *ngIf="!addButtonClicked && !editButtonClicked && !seeDetailsButtonClicked">
+    <div class="no-appointments" *ngIf="appointments.length == 0">
+        You have no appointments scheduled. Click on Schedule an Appointment to get started.
+    </div>
+
+    <div class="my-appointments-title" *ngIf="appointments.length > 0">
+        My Appointments
+    </div>
+
+    <table *ngIf="appointments.length > 0" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Appointment Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Last Updated</th>
+                <th scope="col">Type</th>
+                <th scope="col">Vehicle</th>
+                <th scope="col">License Plate</th>
+                <th scope="col">Mileage</th>
+                <th scope="col">Provider Selected</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments">
+                <td>{{appointment?.appointmentDate | date:'medium'}}</td>
+                <td>{{appointment?.appointmentStatus}}</td>
+                <td>{{appointment?.lastUpdate}}</td>
+                <td>{{appointment?.serviceType}}</td>
+                <td>{{appointment?.vehicleDetails[0]?.year + ' ' + appointment?.vehicleDetails[0]?.make + ' ' +
+                    appointment?.vehicleDetails[0]?.model}}</td>
+                <td>{{appointment?.vehicleDetails[0]?.licensePlate}}</td>
+                <td>{{appointment?.vehicleDetails[0]?.mileage}}</td>
+                <td>{{appointment?.provider?.name}}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="editAppointment(appointment)"
+                        *ngIf="appointment.appointmentStatus == 'Open'">Edit</button>
+                    <button class="btn btn-danger" (click)="open('mymodal', appointment)"
+                        *ngIf="appointment.appointmentStatus == 'Open'">Cancel</button>
+                    <button class="btn btn-primary" (click)="seeDetails(appointment)">See Details</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="see-details" *ngIf="seeDetailsButtonClicked">
+    <!-- display all details of the appointment -->
+    <div class="my-appointments-title">
+        <div>Appointment Details</div>
+        <button class="back-button btn btn-primary justify-content-end align-items-end" (click)="seeDetailsButtonClicked = false">Back</button>
+    </div>
+
+    <div class="appointment-details">
+        <div class="appointment-details-title">Appointment Date
+            <div class="appointment-details-value">{{detailObject?.appointmentDate | date:'medium'}}</div>
+        </div>
+
+        <div class="appointment-details-title">Status
+            <div class="appointment-details-value">{{detailObject?.appointmentStatus}}</div>
+        </div>
+        <div class="appointment-details-title">Last Updated
+            <div class="appointment-details-value">{{detailObject?.lastUpdate}}</div>
+        </div>
+        <div class="appointment-details-title">Type
+            <div class="appointment-details-value">{{detailObject?.serviceType}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Make
+            <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.make}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Model
+            <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.model}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Year
+            <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.year}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle VIN
+            <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.VIN}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle License Plate
+            <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.licensePlate}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Mileage
+            <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.mileage}}</div>
+        </div>
+        <div class="appointment-details-title">Provider Selected
+            <div class="appointment-details-value">{{detailObject?.provider?.name}}</div>
+        </div>
+        <div class="appointment-details-title">Provider Address
+            <div class="appointment-details-value">{{detailObject?.provider?.address}}</div>
+        </div>
+        <div class="appointment-details-title">Provider Phone Number
+            <div class="appointment-details-value">{{detailObject?.provider?.phone}}</div>
+        </div>
+        <div class="appointment-details-title">Provider Email
+            <div class="appointment-details-value">{{detailObject?.provider?.email}}</div>
+        </div>
+        <div class="appointment-details-title">Additional Notes
+            <div class="appointment-details-value">{{detailObject?.notes}}</div>
+        </div>
+    </div>

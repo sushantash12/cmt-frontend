@@ -25,4 +25,44 @@ export class ApiService {
     }
     return this.http.get(this.baseUrl + '/vehicles/' + ownerId, {headers});
   }
+
+  addVehicleForOwner(vehicle: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.post(this.baseUrl + '/vehicles', vehicle, {headers});
+  }
+
+  updateVehicleForOwner(vehicle: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.put(this.baseUrl + '/vehicles/'+ vehicle.vehicleID, vehicle, {headers});
+  }
+
+  deleteVehicleForOwner(vehicleId: string){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.delete(this.baseUrl + '/vehicles/'+ vehicleId, {headers});
+  }
+
+  getAppointmentsOfOwner(ownerId: string){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.get(this.baseUrl + '/appointments/' + ownerId, {headers});
+  }
+
+  async getAllProviders(){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return await this.http.get(this.baseUrl + '/providers', {headers}).toPromise();
+  }
 }
