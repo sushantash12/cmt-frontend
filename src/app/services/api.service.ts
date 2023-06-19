@@ -65,4 +65,12 @@ export class ApiService {
     }
     return await this.http.get(this.baseUrl + '/providers', {headers}).toPromise();
   }
+
+  addAppointmentForOwner(appointment: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.post(this.baseUrl + '/appointments', appointment, {headers});
+  }
 }

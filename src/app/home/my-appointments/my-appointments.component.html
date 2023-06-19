@@ -104,3 +104,54 @@
             <div class="appointment-details-value">{{detailObject?.notes}}</div>
         </div>
     </div>
+</div>
+
+<!-- Add Appointment -->
+<div class="add-appointment" *ngIf="addButtonClicked">
+    <div class="my-vehicles-title">
+        Schedule an Appointment
+    </div>
+
+    <form [formGroup]="addAppointmentForm" class="appointment" (ngSubmit)="scheduleAppointment()">
+        <div class="form-group">
+            <mat-form-field>
+                <label for="appointmentDate">Appointment Date</label>
+                <input matInput type="datetime-local" id="appointmentDate" class="form-control datepick" formControlName="appointmentDate">            
+            </mat-form-field>
+        </div>
+        
+        <div class="form-group">
+            <label for="serviceType">Service Type</label>
+            <select class="form-control" id="serviceType" formControlName="serviceType">
+                <option value="Oil Change">Oil Change</option>
+                <option value="Tire Rotation">Tire Rotation</option>
+                <option value="Brake Replacement">Brake Replacement</option>
+                <option value="Battery Replacement">Battery Replacement</option>
+                <option value="Engine Repair">Engine Repair</option>
+                <option value="Transmission Repair">Transmission Repair</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="vehicle">Vehicle</label>
+            <select class="form-control" id="vehicle" formControlName="vehicleID">
+                <option *ngFor="let vehicle of vehicles" [ngValue]="vehicle.vehicleID">{{vehicle?.year + ' ' + vehicle?.make + ' ' + vehicle?.model}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="provider">Provider</label>
+            <select class="form-control" id="provider" formControlName="providerID">
+                <option *ngFor="let provider of providers" [ngValue]="provider.providerID">{{provider?.name}} - {{provider?.address}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea class="form-control" id="notes" rows="3" formControlName="notes"></textarea>
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="!addAppointmentForm.valid">Schedule</button>
+    </form>
+
+</div>

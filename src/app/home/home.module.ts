@@ -7,6 +7,10 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { MyVehiclesComponent } from './my-vehicles/my-vehicles.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MyAppointmentsComponent } from './my-appointments/my-appointments.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 
 
 @NgModule({
@@ -21,7 +25,10 @@ import { MyAppointmentsComponent } from './my-appointments/my-appointments.compo
     HomeRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class HomeModule { }

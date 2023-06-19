@@ -82,3 +82,17 @@ table tr:first-child th {
     right: 0;
     top: 0;
 }
+.my-vehicles-title{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+.add-appointment{
+    margin-top: 1em;
+    min-width: 50vw;
+}
+.datepick{
+    height: 2em;
+    background-color: #ffffff;
+}
