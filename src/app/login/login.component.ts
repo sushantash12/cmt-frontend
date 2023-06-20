@@ -22,10 +22,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log(this.loginForm.controls.username.value);
-    console.log(this.loginForm.controls.password.value);
-    console.log(this.loginForm.controls.role.value);
-
     if(this.loginForm.controls.role.value == 'owner'){
       this.apiService.ownerLogin(this.loginForm.controls.username.value, this.loginForm.controls.password.value).subscribe((res : any)=>{
         if(res?.token){
@@ -44,6 +40,8 @@ export class LoginComponent implements OnInit {
         if(res?.token){
           localStorage.setItem('token', res.token);
           localStorage.setItem('role', 'admin');
+          localStorage.setItem('admin', JSON.stringify(res.user));
+          this.router.navigate(['/home']);
           this.toastr.success('Login Successful');
         }
       }, (err: any)=>{

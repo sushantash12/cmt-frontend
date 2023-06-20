@@ -1,0 +1,175 @@
+<div class="vehicles-title">Manage your Appointments</div>
+
+<div class="select-provider-title">Select a Provider</div>
+<div class="select-provider">
+    <select class="form-control" id="provider" [(ngModel)]="selectedProvider" (ngModelChange)="changeProvider()">
+        <option *ngFor="let provider of providers" [value]="provider?.providerID">{{provider?.name}} {{provider?.address}}</option>
+    </select>
+</div>
+
+<div class="no-appointments mt-5" *ngIf="selectedProvider && appointments.length == 0">
+    You have no appointments scheduled with this provider.
+</div>
+
+<table *ngIf="selectedProvider && appointments.length > 0" class="table table-striped mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Appointment ID</th>
+            <th scope="col">Date & Time</th>
+            <th scope="col">Service Type</th>
+            <th scope="col">Vehicle</th>
+            <th scope="col">Customer Notes</th>
+            <th scope="col">Appointment Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let appointment of appointments">
+            <td>{{appointment?.appointmentID}}</td>
+            <td>{{appointment?.appointmentDate | date:'medium'}}</td>
+            <td>{{appointment?.serviceType}}</td>
+            <td>{{appointment?.vehicleDetails[0]?.year}} {{appointment?.vehicleDetails[0]?.make}} {{appointment?.vehicleDetails[0]?.model}}</td>
+            <td>{{appointment?.notes}}</td>
+            <td>{{appointment?.appointmentStatus}}</td>
+            <td>
+                <button class="btn btn-primary" *ngIf="appointment?.appointmentStatus == 'Open'" (click)="closeAppointment(appointment)">Close Appointment</button>
+                <button class="btn btn-primary" (click)="seeAllDetails(appointment)">See All Details</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="close-appointment" *ngIf="closeAppointmentClicked">
+    <form [formGroup]="maintenanceForm" (ngSubmit)="markAsResolved()">
+        <div class="form-group">
+            <label for="appointmentID">Appointment ID</label>
+            <input type="text" class="form-control" id="appointmentID" formControlName="appointmentID" placeholder="Enter Appointment ID" readonly [disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="text" class="form-control" id="date" formControlName="date" placeholder="Enter Date" readonly [disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="serviceType">Service Type</label>
+            <input type="text" class="form-control" id="serviceType" formControlName="type" placeholder="Enter Service Type" readonly [disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="cost">Cost</label>
+            <input type="text" class="form-control" id="cost" formControlName="cost" placeholder="Enter Cost">
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <input type="text" class="form-control" id="notes" formControlName="notes" placeholder="Enter Notes">
+        </div>
+        <div class="form-group">
+            <label for="nextMaintenanceDate">Next Maintenance Date</label>
+            <<input matInput type="date" class="form-control" id="nextMaintenanceDate" formControlName="nextMaintenanceDate" placeholder="Enter Next Maintenance Date">
+        </div>
+        <div class="form-group">
+            <label for="mileage">Mileage Recorded</label>
+            <input type="text" class="form-control" id="mileage" formControlName="mileage" placeholder="Enter Mileage">
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="!maintenanceForm.valid">Close Appointment</button>
+    </form>
+</div>
+
+<div class="see-details mt-5" *ngIf="detailsButtonClicked">
+    <!-- display all details of the appointment -->
+    <div class="my-appointments-title">
+        <div>Appointment Details</div>
+    </div>
+
+    <div class="appointment-details">
+        <div class="appointment-details-title">Appointment Date
+            <div class="appointment-details-value">{{selectedAppointment?.appointmentDate | date:'medium'}}</div>
+        </div>
+        <div class="appointment-details-title">Status
+            <div class="appointment-details-value">{{selectedAppointment?.appointmentStatus}}</div>
+        </div>
+        <div class="appointment-details-title">Last Updated
+            <div class="appointment-details-value">{{selectedAppointment?.lastUpdate | date:'medium'}}</div>
+        </div>
+        <div class="appointment-details-title">Type
+            <div class="appointment-details-value">{{selectedAppointment?.serviceType}}</div>
+        </div>
+        <div class="appointment-details-title">Additional Notes
+            <div class="appointment-details-value">{{selectedAppointment?.notes}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="see-details mt-5" *ngIf="detailsButtonClicked">
+    <!-- display all details of the appointment -->
+    <div class="my-appointments-title">
+        <div>Vehicle Details</div>
+    </div>
+
+    <div class="appointment-details">
+        <div class="appointment-details-title">Vehicle Make
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.make}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Model
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.model}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Year
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.year}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle VIN
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.VIN}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle License Plate
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.licensePlate}}</div>
+        </div>
+        <div class="appointment-details-title">Vehicle Mileage
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.mileage}}</div>
+        </div>
+        <div class="appointment-details-title">Mileage Last Updated
+            <div class="appointment-details-value">{{selectedAppointment?.vehicleDetails[0]?.mileageDate | date:'medium'}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="see-details mt-5" *ngIf="detailsButtonClicked">
+    <!-- display all details of the appointment -->
+    <div class="my-appointments-title">
+        <div>Owner Details</div>
+    </div>
+
+    <div class="appointment-details">
+        <div class="appointment-details-title">Owner's name
+            <div class="appointment-details-value">{{selectedAppointment?.ownerDetails[0]?.name}}</div>
+        </div>
+        <div class="appointment-details-title">Address
+            <div class="appointment-details-value">{{selectedAppointment?.ownerDetails[0]?.address}}</div>
+        </div>
+        <div class="appointment-details-title">Email
+            <div class="appointment-details-value">{{selectedAppointment?.ownerDetails[0]?.email}}</div>
+        </div>
+        <div class="appointment-details-title">Phone
+            <div class="appointment-details-value">{{selectedAppointment?.ownerDetails[0]?.phone}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="see-details mt-5" *ngIf="detailsButtonClicked && selectedAppointment.maintenanceRecordDetails?.length>0">
+    <!-- display all details of the appointment -->
+    <div class="my-appointments-title">
+        <div>Associated Maintenance Record</div>
+    </div>
+
+    <div class="appointment-details">
+        <div class="appointment-details-title">Maintenance Performed on
+            <div class="appointment-details-value">{{selectedAppointment?.maintenanceRecordDetails[0]?.date | date:'medium'}}</div>
+        </div>
+        <div class="appointment-details-title">Service Type
+            <div class="appointment-details-value">{{selectedAppointment?.maintenanceRecordDetails[0]?.type}}</div>
+        </div>
+        <div class="appointment-details-title">Service Notes
+            <div class="appointment-details-value">{{selectedAppointment?.maintenanceRecordDetails[0]?.notes}}</div>
+        </div>
+        <div class="appointment-details-title">Next Maintenance Date
+            <div class="appointment-details-value">{{selectedAppointment?.maintenanceRecordDetails[0]?.nextMaintenanceDate | date:'medium'}}</div>
+        </div>
+    </div>
+</div>
+

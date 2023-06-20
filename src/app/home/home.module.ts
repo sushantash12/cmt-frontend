@@ -10,6 +10,7 @@ import { MyAppointmentsComponent } from './my-appointments/my-appointments.compo
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ManageAppointmentsComponent } from './manage-appointments/manage-appointments.component';
 
 
 
@@ -18,7 +19,8 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     HomepageComponent,
     MyVehiclesComponent,
-    MyAppointmentsComponent
+    MyAppointmentsComponent,
+    ManageAppointmentsComponent
   ],
   imports: [
     CommonModule,

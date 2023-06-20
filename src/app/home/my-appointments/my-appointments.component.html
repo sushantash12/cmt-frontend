@@ -36,7 +36,7 @@
                     appointment?.vehicleDetails[0]?.model}}</td>
                 <td>{{appointment?.vehicleDetails[0]?.licensePlate}}</td>
                 <td>{{appointment?.vehicleDetails[0]?.mileage}}</td>
-                <td>{{appointment?.provider?.name}}</td>
+                <td>{{appointment?.providerDetails[0]?.name}}</td>
                 <td>
                     <button class="btn btn-primary" (click)="editAppointment(appointment)"
                         *ngIf="appointment.appointmentStatus == 'Open'">Edit</button>

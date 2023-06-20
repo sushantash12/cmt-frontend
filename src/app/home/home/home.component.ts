@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
       selected: true
     },
     {
-      name: 'Users',
+      name: 'Manage Appointments',
       icon: 'assets/icons/people.svg',
-      link: '/users',
+      link: '/manage-appointments',
       admin: true,
       owner: false,
       selected: false

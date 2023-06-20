@@ -22,6 +22,10 @@
                     <img src="{{item.icon}}" alt="{{item.name}}" class="sidebar-icon">
                     <div class="sidebar-item-name">{{item.name}}</div>
                 </div>
+                <div class="d-flex sidebar-item" [ngClass]="item.selected ? 'selected':''" *ngIf="isAdmin && item.admin">
+                    <img src="{{item.icon}}" alt="{{item.name}}" class="sidebar-icon">
+                    <div class="sidebar-item-name">{{item.name}}</div>
+                </div>
             </div>
         </div>
         <div class="col d-flex justify-content-center w-100">

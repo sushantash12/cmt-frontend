@@ -90,4 +90,20 @@ export class ApiService {
     return this.http.put(this.baseUrl + '/appointments/'+ appointmentID, appointment, {headers});
   }
 
+  getAppointmentsOfProvider(providerId: string){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.get(this.baseUrl + '/appointments/provider/' + providerId, {headers});
+  }
+
+  createMaintenanceRecord(maintenanceRecord: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.post(this.baseUrl + '/maintenanceRecords', maintenanceRecord, {headers});
+  }
+
 }
