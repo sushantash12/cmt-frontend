@@ -1,0 +1,80 @@
+<div class="my-vehicles-title">Manage your Admins</div>
+<div class="add-vehicle-button" *ngIf="!addButtonClicked">
+    <button class="btn btn-primary" (click)="addAdmin()">Add Admin</button>
+</div>
+
+<div class="my-vehicles" *ngIf="!addButtonClicked">
+    <div class="no-vehicles" *ngIf="admins.length == 0">
+        You have no other admins. Click on Add Admin.
+    </div>
+
+    <div class="my-vehicles-title" *ngIf="admins.length > 0">
+        Admins
+    </div>
+
+    <table *ngIf="admins.length > 0" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Admin Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Is Super Admin?</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let admin of admins">
+                <td>{{admin?.name}}</td>
+                <td>{{admin?.username}}</td>
+                <td>{{admin?.email}}</td>
+                <td>{{admin?.isSuperAdmin}}</td>
+                <td>
+                    <button class="btn btn-danger" (click)="open(mymodal, admin)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="add-vehicle" *ngIf="addButtonClicked">
+    <div class="my-vehicles-title">
+        Add an Admin
+    </div>
+
+    <form [formGroup]="addAdminForm">
+        <div class="form-group">
+            <label for="name">Admin Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter Admin Name">
+        </div>
+        <div class="form-group">
+            <label for="email">Admin Username</label>
+            <input type="text" class="form-control" id="username" formControlName="username" placeholder="Enter Username">
+        </div>
+        <div class="form-group">
+            <label for="phone">Password</label>
+            <input type="password" class="form-control" id="phone" formControlName="password" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+            <label for="address">Email</label>
+            <input type="text" class="form-control" id="address" formControlName="email" placeholder="Enter Email">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3" (click)="onAdd()">Add</button>
+        <button type="button" class="btn btn-danger mt-3" (click)="addButtonClicked = false">Cancel</button>
+    </form>
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Admin?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Are you sure you want to delete this admin?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="deleteAdmin()">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    </div>
+</ng-template>

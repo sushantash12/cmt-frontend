@@ -50,6 +50,14 @@ export class HomeComponent implements OnInit {
       admin: false,
       owner: true,
       selected: false
+    },
+    {
+      name: 'Add/Remove Admins',
+      icon: 'assets/icons/admin.svg',
+      link: '/add-remove-admins',
+      admin: false,
+      owner: false,
+      selected: false
     }
   ];
   isOwner: boolean = false;
@@ -71,6 +79,15 @@ export class HomeComponent implements OnInit {
     this.user = localStorage.getItem('role') == 'owner' ? JSON.parse(localStorage.getItem('owner')!) : JSON.parse(localStorage.getItem('admin')!);
     this.isOwner = localStorage.getItem('role') == 'owner';
     this.isAdmin = localStorage.getItem('role') == 'admin';
+    if(this.isAdmin && this.user.isSuperAdmin){
+      // set add/remove admins menu item to admin true
+      this.menuItems.forEach((element) => {
+        if(element.name == 'Add/Remove Admins'){
+          element.admin = true;
+        }
+      }
+      );
+    }
   }
 
   toggleMenu(){

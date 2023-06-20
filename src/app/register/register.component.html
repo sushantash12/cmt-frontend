@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form class="form-signin" [formGroup]="signUpForm" (submit)="signUp()">
+                <h2 class="form-signin-heading">Sign Up</h2>
+
+                <label for="inputUsername" class="sr-only">Email</label>
+                <input type="email" id="inputUsername" class="form-control" placeholder="Email" required autofocus
+                    formControlName="email">
+
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required
+                    formControlName="password">
+
+                <label for="inputName" class="sr-only">Name</label>
+                <input type="text" id="inputName" class="form-control" placeholder="Name" required
+                    formControlName="name">
+
+                <label for="inputPhone" class="sr-only">Phone</label>
+                <input type="number" id="inputPhone" class="form-control" placeholder="Phone" required
+                    formControlName="phone">
+
+                <label for="inputAddress" class="sr-only">Address</label>
+                <input type="text" id="inputAddress" class="form-control" placeholder="Address" required
+                    formControlName="address">
+
+                
+                <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
+                <button class="btn btn-lg btn-primary btn-block mt-3 back-login" type="button" (click)="goToLogin()">Back to Login</button>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

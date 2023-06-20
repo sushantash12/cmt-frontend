@@ -11,6 +11,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ManageAppointmentsComponent } from './manage-appointments/manage-appointments.component';
+import { ManageServiceProvidersComponent } from './manage-service-providers/manage-service-providers.component';
+import { AddRemoveAdminsComponent } from './add-remove-admins/add-remove-admins.component';
 
 
 
@@ -20,7 +22,9 @@ import { ManageAppointmentsComponent } from './manage-appointments/manage-appoin
     HomepageComponent,
     MyVehiclesComponent,
     MyAppointmentsComponent,
-    ManageAppointmentsComponent
+    ManageAppointmentsComponent,
+    ManageServiceProvidersComponent,
+    AddRemoveAdminsComponent
   ],
   imports: [
     CommonModule,

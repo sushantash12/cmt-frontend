@@ -1,0 +1,69 @@
+.my-vehicles-title{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+.add-vehicle-button{
+    margin-top: 1em;
+}
+.my-vehicles{
+    margin-top: 1em;
+}
+.add-vehicle{
+    margin-top: 1em;
+    min-width: 50vw;
+}
+.edit-vehicle{
+    margin-top: 1em;
+    min-width: 50vw;
+}
+.my-vehicles-title{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+.close{
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0; 
+    border-collapse: separate;
+    box-shadow: 0px 20px 15px rgb(0 0 0 / 20%);
+    box-sizing: border-box;
+    backdrop-filter: blur(33px);
+    background-blend-mode: overlay;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius:7px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius:7px;
+}
+
+table tr:first-child th:first-child{
+    border-top-left-radius:7px
+}
+
+table tr:first-child th:last-child{
+    border-top-right-radius:7px
+}
+button{
+    margin-right: 0.5em;
+}
+
+table tr:first-child th {
+    background-color: #4c3434e0;
+    color: rgba(255,255,255,.8);
+    padding: 0.5em;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1em;
+    border: 1px solid #ddd;
+}

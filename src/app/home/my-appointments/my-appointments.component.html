@@ -36,7 +36,7 @@
                     appointment?.vehicleDetails[0]?.model}}</td>
                 <td>{{appointment?.vehicleDetails[0]?.licensePlate}}</td>
                 <td>{{appointment?.vehicleDetails[0]?.mileage}}</td>
-                <td>{{appointment?.providerDetails[0]?.name}}</td>
+                <td>{{appointment?.providerDetails[0]?.name || 'Provider does not exist anymore'}}</td>
                 <td>
                     <button class="btn btn-primary" (click)="editAppointment(appointment)"
                         *ngIf="appointment.appointmentStatus == 'Open'">Edit</button>
@@ -89,16 +89,16 @@
             <div class="appointment-details-value">{{detailObject?.vehicleDetails[0]?.mileage}}</div>
         </div>
         <div class="appointment-details-title">Provider Selected
-            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.name}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.name || 'Provider does not exist anymore'}}</div>
         </div>
         <div class="appointment-details-title">Provider Address
-            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.address}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.address || 'Provider does not exist anymore'}}</div>
         </div>
         <div class="appointment-details-title">Provider Phone Number
-            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.phone}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.phone || 'Provider does not exist anymore'}}</div>
         </div>
         <div class="appointment-details-title">Provider Email
-            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.email}}</div>
+            <div class="appointment-details-value">{{detailObject?.providerDetails[0]?.email || 'Provider does not exist anymore'}}</div>
         </div>
         <div class="appointment-details-title">Additional Notes
             <div class="appointment-details-value">{{detailObject?.notes}}</div>

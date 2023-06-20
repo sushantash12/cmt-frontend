@@ -106,4 +106,60 @@ export class ApiService {
     return this.http.post(this.baseUrl + '/maintenanceRecords', maintenanceRecord, {headers});
   }
 
+  addProvider(provider: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.post(this.baseUrl + '/providers', provider, {headers});
+  }
+
+  updateProvider(provider: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    console.log(provider);
+    return this.http.put(this.baseUrl + '/providers', provider, {headers});
+  }
+
+  deleteProvider(providerId: string){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    console.log(providerId);
+    return this.http.delete(this.baseUrl + '/providers/'+ providerId, {headers});
+  }
+
+  getAllAdmins(){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.get(this.baseUrl + '/admin', {headers});
+  }
+
+  addAdmin(admin: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    console.log(admin);
+    return this.http.post(this.baseUrl + '/admin', admin, {headers});
+  }
+
+  deleteAdmin(username: string){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    console.log(username);
+    return this.http.delete(this.baseUrl + '/admin/'+ username, {headers});
+  }
+
+  ownerSignUp(owner: any){
+    return this.http.post(this.baseUrl + '/users/register', owner);
+  }
+
 }
