@@ -20,6 +20,7 @@
                 <th scope="col">Year</th>
                 <th scope="col">VIN</th>
                 <th scope="col">License Plate</th>
+                <th scope="col">State Registered</th>
                 <th scope="col">Mileage</th>
                 <th scope="col">Last Mileage Recorded</th>
                 <th scope="col">Actions</th>
@@ -32,6 +33,7 @@
                 <td>{{vehicle?.year}}</td>
                 <td>{{vehicle?.VIN}}</td>
                 <td>{{vehicle?.licensePlate}}</td>
+                <td>{{vehicle?.state}}</td>
                 <td>{{vehicle?.mileage}}</td>
                 <td>{{vehicle?.mileageDate | date}}</td>
                 <td>
@@ -71,6 +73,10 @@
             <input type="text" class="form-control" id="licensePlate" formControlName="licensePlate" placeholder="Enter License Plate">
         </div>
         <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" class="form-control" id="state" formControlName="state" placeholder="Enter State">
+        </div>
+        <div class="form-group">
             <label for="mileage">Mileage</label>
             <input type="number" class="form-control" id="mileage" formControlName="mileage" placeholder="Enter Mileage">
         </div>
@@ -104,6 +110,10 @@
         <div class="form-group">
             <label for="licensePlate">License Plate</label>
             <input type="text" class="form-control" id="licensePlate" formControlName="licensePlate" placeholder="Enter License Plate">
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" class="form-control" id="state" formControlName="state" placeholder="Enter State">
         </div>
         <div class="form-group">
             <label for="mileage">Mileage</label>

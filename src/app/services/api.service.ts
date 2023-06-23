@@ -18,6 +18,14 @@ export class ApiService {
     return this.http.post(this.baseUrl + '/admin/login', {username, password});
   }
 
+  changePassword(data: any){
+    // add authorization header with jwt token
+    let headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+    return this.http.put(this.baseUrl + '/admin/change-password', data, {headers});
+  }
+
   getVehiclesOfOwner(ownerId: string){
     // add authorization header with jwt token
     let headers = {

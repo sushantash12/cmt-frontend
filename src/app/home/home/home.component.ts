@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +12,11 @@ import { ApiService } from 'src/app/services/api.service';
 export class HomeComponent implements OnInit {
   showMenu: boolean = false;
   user: any;
+  changePasswordForm = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    oldPassword: new FormControl('',[Validators.required]),
+    newPassword: new FormControl('', [Validators.required])
+  });
   menuItems: any[] = [
     {
       name: 'Home',
@@ -62,7 +69,8 @@ export class HomeComponent implements OnInit {
   ];
   isOwner: boolean = false;
   isAdmin: boolean = false;
-  constructor(private router: Router) { 
+  isFirstTime: boolean = false;
+  constructor(private router: Router, private apiService: ApiService, private toastr: ToastrService) { 
     // get url and set selected menu item
     let url = this.router.url;
     url = url.replace('/home', '');
@@ -79,6 +87,12 @@ export class HomeComponent implements OnInit {
     this.user = localStorage.getItem('role') == 'owner' ? JSON.parse(localStorage.getItem('owner')!) : JSON.parse(localStorage.getItem('admin')!);
     this.isOwner = localStorage.getItem('role') == 'owner';
     this.isAdmin = localStorage.getItem('role') == 'admin';
+    if(this.isAdmin){
+      if(this.user.isFirstTime){
+        this.isFirstTime=true;
+        this.changePasswordForm.controls['username'].setValue(this.user.username);
+      }
+    }
     if(this.isAdmin && this.user.isSuperAdmin){
       // set add/remove admins menu item to admin true
       this.menuItems.forEach((element) => {
@@ -107,5 +121,19 @@ export class HomeComponent implements OnInit {
   logout(){
     localStorage.clear();
     this.router.navigate(['']);
-  }  
+  }
+
+  onChangePassword(){
+    this.apiService.changePassword(this.changePasswordForm.value).subscribe((data: any) =>{
+      this.user.isFirstTime = false;
+      localStorage.setItem('admin', JSON.stringify(this.user))
+      this.isFirstTime = false;
+      this.toastr.success(data?.message);
+    },
+    (error: any) => {
+      this.toastr.error(error?.error?.error)
+    }
+    );
+    
+  }
 }

@@ -2,7 +2,7 @@
     <div class="container-fluid row">
         <div class="col-md-12 d-flex">
             <div class="col-md-3">
-                <img src="assets/icons/menu.svg" alt="menu" class="menu-icon" (click)="toggleMenu()">
+                <img src="assets/icons/menu.svg" alt="menu" class="menu-icon" (click)="toggleMenu()" *ngIf="!isFirstTime">
             </div>
             <div class="col-md-6 d-flex align-items-center justify-content-center">
                 <div class="header-title">Vehicle Management System</div>
@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<div class="row h-100 w-100">
+<div class="row h-100 w-100" *ngIf="!isFirstTime">
     <div class="col-md-12 d-flex">
         <div class="col-md-2 sidebar" *ngIf="showMenu">
             <div class="sidebar-items" *ngFor="let item of menuItems" (click)="navigate(item)">
@@ -32,4 +32,26 @@
             <router-outlet></router-outlet>
         </div>
     </div>
+</div>
+
+<div class="row mt-5 justify-content-center" *ngIf="isFirstTime">
+    <div class="header-title">
+        Change Password for First time login
+    </div>
+
+    <form [formGroup]="changePasswordForm" style="width: 60%; margin-top: 1em;" (ngSubmit)="onChangePassword()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" formControlName="username" readonly>
+        </div>
+        <div class="form-group">
+            <label for="old">Old Password</label>
+            <input type="password" class="form-control" id="old" formControlName="oldPassword" placeholder="Enter Old Password">
+        </div>
+        <div class="form-group">
+            <label for="new">New Password</label>
+            <input type="password" class="form-control" id="new" formControlName="newPassword" placeholder="Enter New Password">
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="!changePasswordForm.valid">Update Password</button>
+    </form>
 </div>

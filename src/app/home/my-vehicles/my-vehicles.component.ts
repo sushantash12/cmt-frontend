@@ -24,6 +24,7 @@ export class MyVehiclesComponent implements OnInit {
     year: new FormControl('', [Validators.required]),
     VIN: new FormControl('', [Validators.required]),
     licensePlate: new FormControl('', [Validators.required]),
+    state: new FormControl(''),
     mileage: new FormControl('', [Validators.required]),
   });
 
@@ -34,6 +35,7 @@ export class MyVehiclesComponent implements OnInit {
     year: new FormControl('', [Validators.required]),
     VIN: new FormControl('', [Validators.required]),
     licensePlate: new FormControl('', [Validators.required]),
+    state: new FormControl(''),
     mileage: new FormControl('', [Validators.required]),
   });
   selectedVehicle: any;
@@ -66,6 +68,7 @@ export class MyVehiclesComponent implements OnInit {
       VIN: vehicle.VIN,
       licensePlate: vehicle.licensePlate,
       mileage: vehicle.mileage,
+      state: vehicle.state,
       vehicleID: vehicle.vehicleID
     })
   }
@@ -89,6 +92,7 @@ export class MyVehiclesComponent implements OnInit {
       licensePlate: this.addVehicleForm.value.licensePlate,
       mileage: this.addVehicleForm.value.mileage,
       ownerID: this.owner.ownerID,
+      state: this.addVehicleForm.value.state,
       mileageDate: this.today.toISOString().slice(0, 10)
     }
     this.apiService.addVehicleForOwner(vehicle).subscribe((response: any) => {
@@ -114,6 +118,7 @@ export class MyVehiclesComponent implements OnInit {
       VIN: this.editVehicleForm.value.VIN,
       licensePlate: this.editVehicleForm.value.licensePlate,
       mileage: this.editVehicleForm.value.mileage,
+      state: this.editVehicleForm.value.state,
       ownerID: this.owner.ownerID,
       mileageDate: this.today.toISOString().slice(0, 10)
     }
